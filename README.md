@@ -2,18 +2,92 @@
 
 A production-grade lead scoring system built with Node.js, MongoDB, Redis, Bull queue, and Socket.io for real-time updates.
 
+
 ## Features
 
-- ✅ Event-driven architecture with Bull queue
-- ✅ Real-time score updates via Socket.io
-- ✅ Idempotent event processing
-- ✅ Event ordering and timestamps
-- ✅ Batch event ingestion via API
-- ✅ Configurable scoring rules
-- ✅ Score cap (1000 points max)
-- ✅ Full audit trail (score history)
-- ✅ Leaderboard and filtering
-- ✅ Comprehensive test coverage
+- Event-driven architecture with Bull queue
+- Real-time score updates via Socket.io
+- Idempotent event processing
+- Event ordering and timestamps
+- Batch event ingestion via API
+- Configurable scoring rules
+- Score cap (1000 points max)
+- Full audit trail (score history)
+- Leaderboard and filtering
+- Comprehensive test coverage
+## Folder Structure
+
+```
+scoring/
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── redis.js
+│   │   ├── models/
+│   │   │   ├── Event.js
+│   │   │   ├── Lead.js
+│   │   │   ├── ScoreHistory.js
+│   │   │   └── ScoringRule.js
+│   │   ├── queues/
+│   │   │   └── event.queue.js
+│   │   ├── routes/
+│   │   │   ├── batch.routes.js
+│   │   │   ├── events.routes.js
+│   │   │   ├── leads.routes.js
+│   │   │   └── rules.routes.js
+│   │   ├── workers/
+│   │   │   └── event.worker.js
+│   │   ├── app.js
+│   │   ├── index.js
+│   │   ├── realtime.js
+│   │   └── server.js
+│   ├── tests/
+│   │   ├── eventIngestion.test.js
+│   │   ├── idempotency.test.js
+│   │   ├── outOfOrder.test.js
+│   │   ├── scoringEngine.test.js
+│   │   └── setup.js
+│   ├── .env
+│   ├── package.json
+│   └── ...
+├── frontend/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   │   ├── layout/
+│   │   │   │   └── AppLayout.tsx
+│   │   │   ├── leads/
+│   │   │   │   ├── EventTimeline.tsx
+│   │   │   │   ├── LeadFilters.tsx
+│   │   │   │   ├── LeadTable.tsx
+│   │   │   │   ├── LeaderboardCard.tsx
+│   │   │   │   └── ScoreChart.tsx
+│   │   │   └── ui/
+│   │   │       └── ... (UI components)
+│   │   ├── hooks/
+│   │   │   ├── use-mobile.tsx
+│   │   │   └── use-toast.ts
+│   │   ├── lib/
+│   │   │   ├── api.ts
+│   │   │   ├── mockData.ts
+│   │   │   ├── socket.ts
+│   │   │   └── utils.ts
+│   │   ├── pages/
+│   │   │   ├── Dashboard.tsx
+│   │   │   ├── LeadDetail.tsx
+│   │   │   ├── Leaderboard.tsx
+│   │   │   ├── NotFound.tsx
+│   │   │   └── SubmitEvent.tsx
+│   │   ├── App.tsx
+│   │   ├── main.tsx
+│   │   └── ...
+│   ├── public/
+│   ├── package.json
+│   └── ...
+├── README.md
+├── package.json
+└── ...
+```
 
 ## Tech Stack
 
