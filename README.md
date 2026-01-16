@@ -1,36 +1,42 @@
-# LeadConnect - Event-Driven Lead Scoring System
+# Event-Driven Lead Scoring System
 
-A modern, real-time lead scoring platform built with React, Node.js, and event-driven architecture.
+A production-grade lead scoring system built with Node.js, MongoDB, Redis, Bull queue, and Socket.io for real-time updates.
 
 ## Features
 
-- **Real-time Scoring**: Lead scores update instantly as events are processed
-- **Event-Driven Architecture**: Built on Bull queues and Redis for scalable event processing
-- **Configurable Rules**: Define custom scoring rules for different event types
-- **Live Dashboard**: Monitor leads with real-time updates via Socket.io
-- **Modern UI**: Clean, human-friendly interface with gradient designs
-- **Full Test Coverage**: Comprehensive unit and integration tests
+- ✅ Event-driven architecture with Bull queue
+- ✅ Real-time score updates via Socket.io
+- ✅ Idempotent event processing
+- ✅ Event ordering and timestamps
+- ✅ Batch event ingestion via API
+- ✅ Configurable scoring rules
+- ✅ Score cap (1000 points max)
+- ✅ Full audit trail (score history)
+- ✅ Leaderboard and filtering
+- ✅ Comprehensive test coverage
 
 ## Tech Stack
 
-### Backend
+**Backend:**
 - Node.js + Express
-- MongoDB (Mongoose)
-- Bull (Redis-based queue)
-- Socket.io (real-time updates)
+- MongoDB + Mongoose
+- Redis
+- Bull (queue system)
+- Socket.io (real-time)
 - Jest + Supertest (testing)
 
-### Frontend
+**Frontend:**
 - React + TypeScript
 - Vite
-- Tailwind CSS + shadcn/ui
-- Framer Motion (animations)
-- Socket.io-client
+- TanStack Query
+- shadcn/ui + Tailwind CSS
+- Framer Motion
+- socket.io-client
 
-## Getting Started
+## Setup
 
 ### Prerequisites
-- Node.js 20+
+- Node.js 18+
 - MongoDB running locally or connection string
 - Redis running locally
 
@@ -48,80 +54,69 @@ cd backend
 npm install
 ```
 
-3. Install frontend dependencies
+3. Create backend `.env` file
 ```bash
-cd ../inspo
+cp .env.example .env
+# Edit .env with your MongoDB and Redis URLs
+```
+
+4. Install frontend dependencies
+```bash
+cd ../frontend
 npm install
 ```
 
-4. Configure environment variables
-Create `backend/.env`:
-```
-PORT=5001
-MONGO_URI=mongodb://localhost:27017/lead-scoring
-REDIS_URL=redis://127.0.0.1:6379
-```
+### Running the Project
 
-### Running the Application
+1. Start MongoDB and Redis (if running locally)
 
-1. Start the backend server
+2. Start the backend
 ```bash
 cd backend
 npm run dev
 ```
 
-2. Start the frontend
+3. Start the frontend
 ```bash
-cd inspo
+cd frontend
 npm run dev
 ```
 
-3. Open http://localhost:8080 in your browser
-
-### Running Tests
-```bash
-cd backend
-npm test
-```
+4. Open http://localhost:8080 in your browser
 
 ## API Endpoints
 
-- `POST /api/leads` - Create a new lead
+### Leads
 - `GET /api/leads` - Get all leads
-- `GET /api/leads/:id` - Get lead by ID
-- `GET /api/leads/:id/history` - Get score history for a lead
-- `POST /api/events` - Submit an event for processing
+- `POST /api/leads` - Create a new lead
+- `GET /api/leads/:id` - Get lead details
+- `GET /api/leads/:id/history` - Get score history
+- `GET /api/leads/leaderboard` - Get top 10 leads
+
+### Events
+- `POST /api/events` - Submit a single event
+- `POST /api/batch` - Batch submit multiple events
 - `GET /api/events/event-types` - Get available event types
-- `POST /api/rules` - Create a scoring rule
+
+### Scoring Rules
 - `GET /api/rules` - Get all scoring rules
+- `POST /api/rules` - Create a new scoring rule
+- `PUT /api/rules/:id` - Update a scoring rule
 
-## How It Works
+## Event Types (Default)
 
-1. **Submit Events**: When a lead performs an action (email open, page view, etc.), submit an event via the API
-2. **Queue Processing**: Events are added to a Bull queue and processed asynchronously
-3. **Score Calculation**: The worker fetches the scoring rule and updates the lead's score
-4. **Real-time Updates**: Score changes are broadcast to connected clients via Socket.io
-5. **Dashboard Updates**: The frontend receives the update and refreshes the UI instantly
+- Email Open: 10 points
+- Page View: 5 points
+- Form Submission: 20 points
+- Demo Request: 50 points
+- Purchase: 100 points
 
-## Project Structure
+## Testing
 
-```
-scoring/
-├── backend/
-│   ├── src/
-│   │   ├── models/          # Mongoose schemas
-│   │   ├── routes/          # Express routes
-│   │   ├── queues/          # Bull queue definitions
-│   │   ├── workers/         # Queue processors
-│   │   ├── realtime.js      # Socket.io setup
-│   │   ├── app.js           # Express app
-│   │   └── server.js        # Server entry point
-│   └── tests/               # Test files
-└── frontend/
-    └── src/
-        ├── components/      # React components
-        ├── pages/           # Page components
-        └── lib/             # Utilities and API client
+Run backend tests:
+```bash
+cd backend
+npm test
 ```
 
 ## License
