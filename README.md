@@ -117,7 +117,7 @@ scoring/
 │   │   ├── app.js           # Express app
 │   │   └── server.js        # Server entry point
 │   └── tests/               # Test files
-└── inspo/
+└── frontend/
     └── src/
         ├── components/      # React components
         ├── pages/           # Page components
